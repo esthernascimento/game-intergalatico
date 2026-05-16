@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+
+body{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    transition: 1s;
+    background-size: cover;
+    background-position: center;
+    font-family: "Space Grotesk", sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* backgrounds de cada fase do meu jogo */
+.bg-intro{
+    background:
+    linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+    url('../img/background-index.png');
+    background-size: cover;
+}
+
+.bg-fase1{
+    background:
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    url('../img/fase1.png');
+    background-size: cover;
+}
+
+.bg-fase2{
+    background:
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    url('../img/fase2.png');
+    background-size: cover;
+}
+
+.bg-fase3{
+    background:
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    url('../img/fase3.png');
+    background-size: cover;
+}
+
+.bg-fase4{
+    background:
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    url('../img/fase4.png');
+    background-size: cover;
+}
+
+.bg-final{
+    background:
+    linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+    url('../img/ganhou.png');
+    background-size: cover;
+}
+
+.bg-derrota{
+    background:
+    linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+    url('../img/perdeu.png');
+    background-size: cover;
+}
+
+.titulo-quiz{
+    text-align: center;
+    color: white;
+    margin-bottom: 20px;
+    font-size: 42px;
+    text-shadow: 0 0 15px #8a2be2;
+}
+
+.button{
+    display: flex;
+    align-self: center;
+    justify-content: center;
+}
+
+button{
+    background-color: #8a2be2;
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    border-radius: 12px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.8s;
+}
+
+button:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #8a2be2;
+}
+
+.opcao{
+    width: 85%;
+    background-color: #8a2be2;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.opcao:hover{
+    transform: scale(1.03);
+    box-shadow: 0 0 15px #8a2be2;
+}
+
+/* container do quiz */
+#jogo{
+    display: none;
+    max-width: 450px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    background-color: rgba(0,0,0,0.4);
+    border: 2px solid #8a2be2;
+    box-shadow: 0 0 25px #8a2be2;
+    color: white;
+}
+
+/* painei de cima do container */
+.painel-status {
+    display: flex; 
+    justify-content: space-around; 
+    margin-bottom: 20px; 
+    font-weight: bold;
+}
+
+/* linhaaa */
+.divisor-jogo {
+    border-color: #8a2be2;
+}
+
+/* textinho da perguntaaa */
+#textoPergunta {
+    font-size: 20px; 
+    margin: 20px 0; 
+    min-height: 80px; 
+    font-weight: bold;
+}
+
+/* alternativas  */
+#containerAlternativas{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* classe de cor pra cada status */
+.status-verde {
+    color: #00ff00;
+}
+
+.status-laranja {
+    color: orange;
+}
+
+.status-vermelho {
+    color: red;
+}
+
+.texto-vermelho {
+    color: red;
+}
+
+.texto-verde {
+    color: #00ff00;
+}

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Intergalático</title>
+    <link rel="stylesheet" href="./assets/css/index.css">
+</head>
+<body id="bodyGame" class="bg-intro">
+
+    <h1 id="tituloQuiz" class="titulo-quiz">
+        QUIZ INTERGALÁCTICO — ARQUITETURA COMPUTACIONAL
+    </h1>
+
+    <div class="button">
+        <button id="btnIniciar" onclick="iniciarQuiz()">
+            INICIAR AVENTURA
+        </button>
+    </div>
+
+    <div id="jogo">
+
+        <div class="painel-status">
+            <p>Fase: <span id="statusFase">1</span></p>
+            <p>Progresso: <span id="statusProgresso">0</span>/15</p>
+            <p>Status da Terra:
+                <span id="statusTerra" class="status-verde">
+                    SEGURA
+                </span>
+            </p>
+        </div>
+
+        <hr class="divisor-jogo">
+
+        <p>Pontos: <span id="statusPontos">0</span></p>
+        <p id="textoPergunta"></p>
+
+        <div id="containerAlternativas"></div>
+
+    </div>
+</body>
+</html>
+
+<script>
+    
+let bancoDePerguntas = [
+    {
+        fase: 1,
+        classeBg: "bg-fase1",
+        pergunta: "Humana… Dentro de toda máquina existe uma entidade que pensa, calcula e coordena tudo. Que componente é esse?",
+        opcoes: ["Memória RAM", "CPU", "Disco Rígido", "Placa de Vídeo"],
+        resposta: "CPU"
+    },
+    {
+        fase: 1,
+        classeBg: "bg-fase1",
+        pergunta: "Durante uma batalha espacial, nossa nave precisa realizar milhões de cálculos por segundo. Qual unidade dentro do processador executa operações matemáticas e lógicas?",
+        opcoes: ["ULA", "Unidade de Controle", "Registrador PC", "Memória Cache"],
+        resposta: "ULA"
+    },
+    {
+        fase: 1,
+        classeBg: "bg-fase1",
+        pergunta: "Em nossa nave, existem compartimentos ultrarrápidos onde informações temporárias ficam guardadas antes de serem usadas pelo processador. Como os humanos chamam esses pequenos guardiões?",
+        opcoes: ["SSD", "EPROM", "Registradores", "Memória de Massa"],
+        resposta: "Registradores"
+    },
+    {
+        fase: 1,
+        classeBg: "bg-fase1",
+        pergunta: "Um dos guardiões da CPU possui a missão de apontar para a próxima instrução que será executada. Qual é o nome desse registrador especial?",
+        opcoes: ["Acumulador", "Data Bus", "Chip Select", "PC"],
+        resposta: "PC"
+    },
+    {
+        fase: 2,
+        classeBg: "bg-fase2",
+        pergunta: "Qual memória humana esquece tudo quando a energia desaparece, mas é essencial enquanto a máquina está funcionando?",
+        opcoes: ["ROM", "RAM", "Flash", "HD"],
+        resposta: "RAM"
+    },
+    {
+        fase: 2,
+        classeBg: "bg-fase2",
+        pergunta: "Existe uma memória que nunca esquece as instruções básicas do sistema, mesmo sem energia. Qual é ela?",
+        opcoes: ["ROM", "RAM", "DMA", "Cache"],
+        resposta: "ROM"
+    },
+    {
+        fase: 2,
+        classeBg: "bg-fase2",
+        pergunta: "Os antigos cientistas da Terra criaram uma memória que podia ser apagada usando luz ultravioleta. Que tecnologia misteriosa é essa?",
+        opcoes: ["EPROM", "Flash", "SSD", "RAM"],
+        resposta: "EPROM"
+    },
+    {
+        fase: 2,
+        classeBg: "bg-fase2",
+        pergunta: "Pendrives, SSDs e cartões espaciais utilizam um tipo moderno de memória regravável eletricamente. Qual é o nome dela?",
+        opcoes: ["ROM", "EPROM", "Flash", "DMA"],
+        resposta: "Flash"
+    },
+    {
+        fase: 2,
+        classeBg: "bg-fase2",
+        pergunta: "Em nossa galáxia chamamos de Arquivo Eterno. Na Terra, como vocês chamam o armazenamento permanente usado em HDs e SSDs?",
+        opcoes: ["Memória Cache", "Memória de Massa", "Memória Volátil", "RAM"],
+        resposta: "Memória de Massa"
+    },
+    {
+        fase: 3,
+        classeBg: "bg-fase3",
+        pergunta: "Para acelerar nossa nave, alguns dispositivos conseguem acessar a memória sem incomodar o processador principal. Que tecnologia faz isso?",
+        opcoes: ["Chip Select", "Address Bus", "Data Bus", "DMA"],
+        resposta: "DMA"
+    },
+    {
+        fase: 3,
+        classeBg: "bg-fase3",
+        pergunta: "Quando precisamos ativar apenas um chip específico da nave, enviamos um sinal especial de seleção. Como os humanos chamam esse comando?",
+        opcoes: ["Chip Select (CS)", "DMA", "Data Bus", "ULA"],
+        resposta: "Chip Select (CS)"
+    },
+    {
+        fase: 3,
+        classeBg: "bg-fase3",
+        pergunta: "Existe uma estrada invisível por onde trafegam informações e valores entre os componentes do computador. Qual barramento transporta esses dados?",
+        opcoes: ["Address Bus", "Data Bus", "Control Bus", "DMA"],
+        resposta: "Data Bus"
+    },
+    {
+        fase: 3,
+        classeBg: "bg-fase3",
+        pergunta: "Outra estrada espacial não leva os dados… ela indica onde eles devem ser encontrados na memória. Qual é seu nome?",
+        opcoes: ["Data Bus", "Control Bus", "Address Bus", "Chip Select"],
+        resposta: "Address Bus"
+    },
+    {
+        fase: 4,
+        classeBg: "bg-fase4",
+        pergunta: "Os lendários processadores i5 e i7 foram criados por qual corporação humana?",
+        opcoes: ["AMD", "Intel", "Nvidia", "Apple"],
+        resposta: "Intel"
+    },
+    {
+        fase: 4,
+        classeBg: "bg-fase4",
+        pergunta: "Se um processador possuir dois núcleos recebe um nome… mas se possuir quatro, recebe outro. Quais são essas classificações?",
+        opcoes: ["Single Core e Dual Core", "Dual Core e Quad Core", "Quad Core e Octa Core", "Dual Core e Octa Core"],
+        resposta: "Dual Core e Quad Core"
+    }
+];
+
+// Variáveis pontuação e qual pergunta está passando na tela
+let atual = 0;
+let erros = 0;
+let acertos = 0;
+
+// aq esconde a tela de introdução e faz o jogo aparecer
+function iniciarQuiz() {
+    document.getElementById("btnIniciar").style.display = "none";
+    document.getElementById("tituloQuiz").style.display = "none";
+    document.getElementById("jogo").style.display = "block";
+    mostrarPergunta();
+}
+
+// controla o que vai aparecer na tela se mostra a próxima pergunta ou o final do jogo
+function mostrarPergunta() {
+    let body = document.getElementById("bodyGame");
+    let divBotoes = document.getElementById("containerAlternativas");
+
+    if (atual < bancoDePerguntas.length) {
+        let q = bancoDePerguntas[atual];
+        document.getElementById("textoPergunta").innerText = q.pergunta;
+        document.getElementById("statusFase").innerText = q.fase;
+        document.getElementById("statusProgresso").innerText = atual + 1;
+
+        // troca o fundo da tela baseado na fase atual do JSON
+        body.className = q.classeBg;
+        divBotoes.innerHTML = "";
+
+        // o meu for cria os 4 botões de alternativas para a pergunta atual
+        for(let i = 0; i < q.opcoes.length; i++) {
+            let btn = document.createElement("button");
+
+            btn.innerText = q.opcoes[i];
+            btn.className = "opcao";
+            
+            // deve checar se a resposta está certa
+            btn.onclick = function () {
+                verificarResposta(q.opcoes[i]);
+            }
+            divBotoes.appendChild(btn);
+        }
+    } else {
+        // se as perguntas acabaram, decide se o jogador ganhou ou perdeu pelos erros acumulados
+        if (erros >= 7){
+            body.className = "bg-derrota";
+            document.getElementById("jogo").innerHTML = `
+                <h2 class="texto-vermelho">A TERRA FOI INVADIDA!</h2>
+                <p>ZyraX assume o controle da humanidade.</p>
+                <p>Acertos: ${acertos}</p>
+                <p>Erros: ${erros}</p>
+            `;
+        } else {
+            body.className = "bg-final";
+            document.getElementById("jogo").innerHTML = `
+                <h2 class="texto-verde">INTELIGÊNCIA HUMANA COMPATÍVEL</h2>
+                <p>ZyraX encara Esther: "Vocês humanos são caóticos… Mas brilhantes."</p>
+                <p>Acertos: ${acertos}</p>
+                <p>Erros: ${erros}</p>
+            `;
+        }
+    }
+}
+
+// analisa se o botão que o jogador clicou é a resposta certa
+function verificarResposta(opcaoEscolhida) {
+    let q = bancoDePerguntas[atual];
+    
+    if (opcaoEscolhida == q.resposta) {
+        alert("✅ CORRETO!");
+        acertos++;
+        document.getElementById("statusPontos").innerText = acertos;
+    } else {
+        alert("❌ INCORRETO! Resposta certa: " + q.resposta);
+        erros++;
+
+        // muda o texto e o nível de perigo da Terra dependendo de quantos erros o jogador tem
+        let terra = document.getElementById("statusTerra");
+        if (erros == 1) {
+            terra.innerText = "ALERTA!";
+            terra.className = "status-laranja"; 
+        } else if (erros >= 3) {
+            terra.innerText = "PERIGO!";
+            terra.className = "status-vermelho";
+        }
+    }
+    atual++; 
+    mostrarPergunta(); 
+}
+</script>
