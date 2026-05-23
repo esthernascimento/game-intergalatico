@@ -151,12 +151,10 @@ let bancoDePerguntas = [
     }
 ];
 
-// Variáveis pontuação e qual pergunta está passando na tela
 let atual = 0;
 let erros = 0;
 let acertos = 0;
 
-// aq esconde a tela de introdução e faz o jogo aparecer
 function iniciarQuiz() {
     document.getElementById("btnIniciar").style.display = "none";
     document.getElementById("tituloQuiz").style.display = "none";
@@ -185,7 +183,6 @@ function mostrarPergunta() {
 
             btn.innerText = q.opcoes[i];
             btn.className = "opcao";
-            
             // deve checar se a resposta está certa
             btn.onclick = function () {
                 verificarResposta(q.opcoes[i]);
@@ -226,7 +223,6 @@ function verificarResposta(opcaoEscolhida) {
         alert("❌ INCORRETO! Resposta certa: " + q.resposta);
         erros++;
 
-        // muda o texto e o nível de perigo da Terra dependendo de quantos erros o jogador tem
         let terra = document.getElementById("statusTerra");
         if (erros == 1) {
             terra.innerText = "ALERTA!";
